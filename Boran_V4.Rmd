@@ -13,32 +13,33 @@ library(dplyr)
 library(ggplot2)
 ```
 
-**GitHub Link to RMD File**: 
+**https://github.com/NoahCSCS/Stat-380-Exercises**: 
 
 ## Probability Practice
 
-Part A:
-Rule of Total Probability: P(A)=P(Y1)*P(Q1|Y1)+P(Y2)*P(Q2|Y2)
+---
+### Part A
+Let $Y$ refer to clicking yes, and $RC$ and $TC$ refer to the events of being a random or truthful clicker, respectively. Then by basic laws of probability we have :
+\begin{align*}
+  P(TC \cap Y) + P(RC \cap Y) &= P(Y)\\
+  P(TC) * P(Y | TC) + P(RC) * P(Y | RC) &= P(Y)\\
+  0.7 * P(Y | TC) + 0.3 * 0.5 &= 0.65\\
+  P(Y | TC) &= \frac{ 0.65 - 0.3 * 0.5 }{0.7} \\
+  P(Y | TC) &= \frac{5}{7} 
+\end{align*}
 
-Let P(Y) as 65%, P(Q1|Y1)=0.5(Random clickers would click either one with equal probability) and P(Y1)=0.3
-0.65=0.3*0.5+0.7*P(Q2|Y2)
-P(Q2|Y2)=5/7
+$5/7$ of truthful clickers answered yes.
 
-Par B: Let's use the Bayes Rule
-We are finding P(D|p)=P(D,p)/P(p)
+### Part B
+Let $T$ and $D$ denote the events of testing positive and being positive for the disease, respectively. Then by Baye's rule:
+\begin{align*}
+  P(D|T) &= \frac{P(D \cap T)}{P(T)}\\
+  P(D|T) &= \frac{P(T|D) * P(D)}{P(T|D) * P(D) + P(T|D^C) * P(D^C)}\\
+  P(D|T) &= \frac{0.993 * 0.000025}{0.993 * 0.000025 + 0.0001 * 0.9975}\\
+  P(D|T) &\approx 0.1992
+\end{align*}
+or 19.92 \% chance of having the diesase among those who test positive.
 
-What is the possibility that someone tests positive-->
-0.000025*0.993+(1-0.000025)*0.0001
-=0.0001248225=P(p)
-0.000025=P(D)
-What is the possibility that someone tests positive and has the disease-->
-P(D,p)=P(D)*P(p)=
-0.000025*0.0001248225=3.120563e-09
-
-
-P(D|p)=P(D,p)/P(p)=
-3.120563e-09/0.0001248225=
-2.5e-05 
 
 \newpage
 ## Wrangling the Billboard Top 100
@@ -759,13 +760,12 @@ The Naive Bayes accuracy is 96.8%, outperforming random forest.
 \newpage
 ## Association rule mining
 
-```{r, include = FALSE}
+```{r, include = FALSE, results = 'hide'}
 
 file <- "https://raw.githubusercontent.com/jgscott/STA380/master/data/groceries.txt"
 ```
 ```{r}
 library(reshape)
-melt(iris)
 library(tidyverse)
 library(arules)  # has a big ecosystem of packages built around it
 library(arulesViz)
@@ -780,7 +780,6 @@ attach(df2)
 df2 <- df2[order(User),]
 detach(df2)
 df2 <- df2[!apply(df2 == "", 1, any),]
-str(df2)
 summary(df2)
 # Barplot of top 20 items
 # the dot (.) means "plug in the argument coming from the left"
